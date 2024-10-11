@@ -60,7 +60,6 @@ class ItemBundleResource extends Resource
     }
 
 
-
     public static function table(Table $table): Table
     {
         return $table
@@ -71,11 +70,10 @@ class ItemBundleResource extends Resource
                     ->searchable()
                     ->rules(['required', 'min:5']),
 
-                Tables\Columns\TextColumn::make('item_bundles.name')
+                Tables\Columns\TextColumn::make('products.name')
                     ->label('Bundle Item')
+                    ->badge()
                     ->searchable()
-
-
 
 
 
