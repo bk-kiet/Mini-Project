@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('item_bundles');
             $table->timestamps();
 
-
         });
     }
 

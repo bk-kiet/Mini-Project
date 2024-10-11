@@ -14,12 +14,10 @@ return new class extends Migration
         Schema::create('product_bundle_pivot', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');;
-            $table->foreignId('item_bundle_id')->constrained()->onDelete('cascade');;
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('item_bundle_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
-
-
 
         });
     }

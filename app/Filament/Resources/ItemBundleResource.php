@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ItemBundleResource\Pages;
-use App\Filament\Resources\ItemBundleResource\RelationManagers;
 use App\Models\ItemBundle;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -11,16 +10,12 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ItemBundleResource extends Resource
 {
     protected static ?string $model = ItemBundle::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-
 
     public static function form(Form $form): Form
     {
@@ -32,7 +27,7 @@ class ItemBundleResource extends Resource
                     ->required()
                     ->maxLength(255),
 
- /*               //Repeater Form method
+                /*               //Repeater Form method
                 Forms\Components\Repeater::make('items')
                     ->label('Items')
                     ->schema([
@@ -45,7 +40,6 @@ class ItemBundleResource extends Resource
                     ->maxItems(10) // You can change this to allow more items
                     ->createItemButtonLabel('Add Item'),*/
 
-
                 Forms\Components\Select::make('item_bundles')
                     ->label('Select Bundles')
                     ->multiple() // Allow selecting multiple bundles
@@ -55,10 +49,9 @@ class ItemBundleResource extends Resource
 
             ])
                         //this columns make every section all in one straight line
-                    ->columns(1);
+            ->columns(1);
 
     }
-
 
     public static function table(Table $table): Table
     {
@@ -73,20 +66,15 @@ class ItemBundleResource extends Resource
                 Tables\Columns\TextColumn::make('products.name')
                     ->label('Bundle Item')
                     ->badge()
-                    ->searchable()
+                    ->searchable(),
 
-
-
-/*                Tables\Columns\TextColumn::make('products.name')
+                /*                Tables\Columns\TextColumn::make('products.name')
                     ->label(__('Products'))
                     ->listWithLineBreaks()
                     ->searchable()
                     ->sortable(),*/
 
             ])
-
-
-
 
             ->filters([
                 //

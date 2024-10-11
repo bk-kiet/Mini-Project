@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
 
-
             //foreign key for categories
             $table->foreignId('category_id')->constrained();
         });

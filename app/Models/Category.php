@@ -9,11 +9,10 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name',];
+    protected $fillable = ['name'];
 
     public function product(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Product::class);
     }
-
 }
