@@ -5,9 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 
 class ProductResource extends Resource
@@ -41,6 +45,14 @@ class ProductResource extends Resource
                             ->relationship('category', 'name')  // Pulls the category name from the Category model
                             ->required(),
 
+                        SpatieMediaLibraryFileUpload::make('images')
+                            ->disk('public') // specific the disk
+                            ->collection('images')
+                            ->multiple()
+                            ->imageEditor()
+                            ->circleCropper()
+
+                            ->required(),
                     ]),
             ])
                         //this columns make every section all in one straight line
@@ -52,6 +64,9 @@ class ProductResource extends Resource
     {
         return $table
             ->columns(components: [
+
+                SpatieMediaLibraryImageColumn::make('image')
+                    ->collection('images'),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Product name'))
