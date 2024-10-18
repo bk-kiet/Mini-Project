@@ -11,9 +11,6 @@ class ItemBundle extends Model
 
     protected $fillable = ['name', 'item_bundles'];
 
-    /*   protected $casts = [
-           'items' => 'array',
-       ];*/
 
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('item_bundles', function (Blueprint $table) {
             $table->id();
             $table->string('name'); //bundle sku
-            $table->string('item_bundles');
+          //  $table->string('item_bundles');
             $table->timestamps();
 
         });
