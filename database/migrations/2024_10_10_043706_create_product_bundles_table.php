@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('item_bundles', function (Blueprint $table) {
+        Schema::create('product_bundles', function (Blueprint $table) {
             $table->id();
             $table->string('name'); //bundle sku
           //  $table->string('item_bundles');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('item_bundles');
+        Schema::dropIfExists('product_bundles');
     }
 };

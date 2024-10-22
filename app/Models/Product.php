@@ -19,10 +19,15 @@ class Product extends Model implements HasMedia
     use InteractsWithMedia;
 
 
+/*    protected $casts = [
+        'price' => 'decimal:2',
+    ];*/
+
     protected $fillable = [
         'name',  // Add 'name' to allow mass assignment
         'sku',
         'category_id',
+        'price',
     ];
 
 
@@ -47,8 +52,9 @@ class Product extends Model implements HasMedia
             ->useDisk('public');
     }
 
+
     public function itemBundles(): BelongsToMany
     {
-        return $this->belongsToMany(ItemBundle::class, 'product_bundle_pivot', 'product_id', 'item_bundle_id');
+        return $this->belongsToMany(ProductBundle::class, 'product_bundle_pivot', 'product_id', 'product_bundle_id');
     }
 }

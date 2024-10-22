@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\ItemBundleResource\Pages;
 
-use App\Filament\Resources\ItemBundleResource;
+use App\Filament\Resources\ProductBundleResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateItemBundle extends CreateRecord
 {
-    protected static string $resource = ItemBundleResource::class;
+    protected static string $resource = ProductBundleResource::class;
 }

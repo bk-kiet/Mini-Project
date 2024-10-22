@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('sku');
+            $table->decimal('price',10,2);
 
         });
     }

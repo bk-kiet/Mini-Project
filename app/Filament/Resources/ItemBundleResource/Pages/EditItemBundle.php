@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\ItemBundleResource\Pages;
 
-use App\Filament\Resources\ItemBundleResource;
+use App\Filament\Resources\ProductBundleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditItemBundle extends EditRecord
 {
-    protected static string $resource = ItemBundleResource::class;
+    protected static string $resource = ProductBundleResource::class;
 
     protected function getHeaderActions(): array
     {

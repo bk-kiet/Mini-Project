@@ -36,8 +36,22 @@ class ProductResource extends Resource
                             ->label(__('Product name'))
                             ->required(),
 
+/*                        Forms\Components\Select::make('currency')
+                            ->options([
+                                'USD' => 'US Dollar',
+                                'EUR' => 'Euro',
+                                // Add more currencies as needed
+                            ])
+                            ->required(),*/
+
                         Forms\Components\TextInput::make('sku')
                             ->label(__('Product SKU'))
+                            ->required(),
+
+                        Forms\Components\TextInput::make('price')
+                      //     ->numeric()
+                            ->prefix('RM')
+                            ->label(__('(RM)Price'))
                             ->required(),
 
                         Forms\Components\Select::make('category_id')  // Reference the foreign key field
@@ -51,7 +65,6 @@ class ProductResource extends Resource
                             ->multiple()
                             ->imageEditor()
                             ->circleCropper()
-
                             ->required(),
                     ]),
             ])
@@ -75,6 +88,14 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('sku')
                     ->label(__('Product SKU'))
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('price')
+                 //   ->money('myr')
+                  //  ->numeric()
+                   ->prefix('RM')
+                    ->label(__('Price'))
+                    ->searchable()
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('category.name')
                     ->label(__('Category'))
