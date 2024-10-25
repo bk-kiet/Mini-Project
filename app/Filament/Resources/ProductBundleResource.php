@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ItemBundleResource\Pages;
+use App\Filament\Resources\ProductBundleResource\Pages;
 use App\Models\ProductBundle;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -22,49 +22,70 @@ class ProductBundleResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+
             ->schema([
 
                 Forms\Components\TextInput::make('name')
-                    ->label('Bundle SKU')
+                    ->label('Bundle SKU') ->unique()
                     ->required()
                     ->maxLength(255),
 
-                               //Repeater Form method
-/*                Forms\Components\Repeater::make('items')
-                    ->label('Items')
+                Forms\Components\Repeater::make('Products')
+                    ->label('Products')
                     ->schema([
-                        TextInput::make('name_bundle')
-                            ->label('Item Name')
-                            ->required()
-                            ->maxLength(255),
-                    ])
-                    ->minItems(1)
-                    ->maxItems(10) // You can change this to allow more items
-                    ->createItemButtonLabel('Add Item'),*/
 
-
-                Forms\Components\Select::make('product_bundles')
+                Forms\Components\Select::make('product_bundles_id')
 
                     ->label('Select Bundles')
                     //->multiple() // Allow selecting multiple bundles
                     ->relationship('products', 'name') // Assuming 'name' is a field in the ItemBundle model
                     ->searchable() // Allow searching through bundles
-                    ->preload(),
+                    ->preload()
+                    ->required()
 
-                TextInput::make('quantity')
+
+                    ->reactive() // Make it reactive to watch for changes
+                    ->afterStateUpdated(function ($state, callable $set , callable $get) { // Get the product price when a product is selected
+                        if ($state) { //checking if the product is selected or not
+                            //$state = Current value of the field
+                            //$set =  function that lets you update other fields' values
+                            $product = \App\Models\Product::find($state);
+                            if ($product) {
+                                $set('product_bundles_price', $product->price );
+
+                            }
+
+                        }
+                    }),
+
+                        Forms\Components\TextInput::make('quantity')
                     ->numeric()
                     ->minValue(1)
                     ->default(1)
-                    ->required(),
+                    ->required()
+                            ->rules(['required', 'min:1'])
+                            ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                        // Get the price and calculate total here
+                        $price = floatval($get('product_bundles_price'));
+                        if ($price && $state) {
+                            $total = $price * (int)$state;
+                            $set('total_price', number_format($total, 2));
+                        }
+                    }),
 
+                Forms\Components\TextInput::make('product_bundles_price')
+                    ->label('(RM)Price'),
 
-/*                Forms\Components\Select::make('product_bundles_price')
-                    ->label('(RM)Price')
-                    ->preload(),*/
+                        Forms\Components\TextInput::make('total_price')
+                            ->label('(RM)Total Price')
+                            ->disabled()//field cannot be edited
+                          //  ->dehydrated(false),//this field won't be saved to the database
 
             ])
-                        //this columns make every section all in one straight line
-            ->columns(1);
+            ])
+                        // column 1 this columns make every section all in one straight line
+            ->columns(2); // column 2 make the section in row
     }
 
     public static function table(Table $table): Table
@@ -72,21 +93,18 @@ class ProductBundleResource extends Resource
         return $table
             ->columns([
 
-                Tables\Columns\TextInputColumn::make('name')
+                Tables\Columns\TextColumn::make('name')
                     ->label('Bundle SKU')
-                    ->searchable()
-                    ->rules(['required', 'min:5']),
+                    ->searchable(),
+
 
                 Tables\Columns\TextColumn::make('products.name')
                     ->label('Bundle Item')
                     ->badge()
-                    ->searchable(),
-
-                /*                Tables\Columns\TextColumn::make('products.name')
-                    ->label(__('Products'))
-                    ->listWithLineBreaks()
                     ->searchable()
-                    ->sortable(),*/
+                    ->sortable(),
+
+
 
             ])
 
@@ -113,9 +131,9 @@ class ProductBundleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListItemBundles::route('/'),
-            'create' => Pages\CreateItemBundle::route('/create'),
-            'edit' => Pages\EditItemBundle::route('/{record}/edit'),
+            'index' => Pages\ListProductBundles::route('/'),
+            'create' => Pages\CreateProductBundle::route('/create'),
+            'edit' => Pages\EditProductBundle::route('/{record}/edit'),
         ];
     }
 }

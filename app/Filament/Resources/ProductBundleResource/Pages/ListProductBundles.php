@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\ItemBundleResource\Pages;
+namespace App\Filament\Resources\ProductBundleResource\Pages;
 
 use App\Filament\Resources\ProductBundleResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListItemBundles extends ListRecords
+class ListProductBundles extends ListRecords
 {
     protected static string $resource = ProductBundleResource::class;
 
